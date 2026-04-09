@@ -7,7 +7,7 @@ const settings = {
     identity: 'lvoot24682@gmail.com', 
     secret: 'epytapfalsfobkac', // رمز التطبيق المكون من 16 حرفاً
     loginType: 8,               // رقم 8 مخصص لتسجيل دخول جوجل
-    targetGroupId: 74000, 
+    targetGroupId: 9969, 
     minuteInterval: 62 * 1000,
     boxInterval: 1109 * 60 * 1000
 };
