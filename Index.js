@@ -3,57 +3,51 @@ const { WOLF, LoginType, OnlineState } = require('wolf.js');
 // إنشاء نسخة العميل
 const client = new WOLF();
 
-// جلب البيانات من متغيرات البيئة (GitHub Secrets)
+// البيانات من GitHub Secrets
 const EMAIL = process.env.U_MAIL;
 const PASSWORD = process.env.U_PASS;
-// الـ API Key الافتراضي للمكتبة لضمان استقرار الدخول
+// الـ API Key الضروري لتجاوز تنبيه النظام
 const API_KEY = '864e707e-f05e-4445-97e1-931698203fd0'; 
 
 async function startBot() {
     try {
-        console.log('--- بدأت عملية التحميل ---');
-        console.log(`محاولة تسجيل الدخول للحساب: ${EMAIL}`);
-        console.log('نوع الدخول المستهدف: SNAPCHAT');
+        console.log('--- بدأت عملية التشغيل الفعلي ---');
+        console.log(`المستهدف: تسجيل دخول سناب شات للحساب: ${EMAIL}`);
 
-        // تنفيذ عملية تسجيل الدخول
-        await client.login(
+        // محاولة تسجيل الدخول مع معالجة الاستجابة
+        const loginResponse = await client.login(
             EMAIL,
             PASSWORD,
             API_KEY,
             OnlineState.ONLINE,
-            LoginType.SNAPCHAT // القيمة البرمجية لـ 'snapchat'
+            LoginType.SNAPCHAT
         );
 
+        console.log('استجابة السيرفر المستلمة...');
+
     } catch (error) {
-        console.error('حدث خطأ أثناء محاولة تسجيل الدخول:');
-        console.error(error);
-        
-        // التحقق من الأخطاء المتعلقة بـ OTP
-        if (error.message && error.message.includes('security')) {
-            console.log('تنبيه: الحساب يتطلب رمز تحقق (OTP) من البريد الإلكتروني.');
+        console.error('❌ فشل تسجيل الدخول!');
+        // طباعة تفاصيل الخطأ بدقة لمعرفة السبب (كلمة مرور، OTP، أو حظر)
+        if (error.body) {
+            console.error('تفاصيل الخطأ من السيرفر:', JSON.stringify(error.body, null, 2));
+        } else {
+            console.error('رسالة الخطأ:', error.message);
         }
     }
 }
 
-// الأحداث (Events)
+// أحداث البوت
 client.on('ready', () => {
-    console.log('====================================');
-    console.log(`تم تسجيل الدخول بنجاح!`);
-    console.log(`متصل الآن باسم: ${client.currentSubscriber.nickname}`);
-    console.log(`ID الحساب: ${client.currentSubscriber.id}`);
-    console.log('====================================');
+    console.log('✅ تم تسجيل الدخول بنجاح!');
+    console.log(`البوت الآن متصل باسم: ${client.currentSubscriber.nickname}`);
 });
 
-// مثال لأمر بسيط للتأكد من استجابة البوت
+// لمنع الأكشن من الإغلاق فوراً (إبقاء البوت حياً)
 client.on('messagePrivate', async (message) => {
-    if (message.content === '!ping') {
-        await client.messaging().sendPrivateMessage(message.subscriberId, 'PONG! البوت يعمل بنجاح عبر GitHub Actions.');
+    if (message.content === '!test') {
+        await client.messaging().sendPrivateMessage(message.subscriberId, 'البوت مستيقظ ويعمل!');
     }
 });
-
-// التعامل مع الفصل التلقائي لضمان بقاء البوت حياً
-client.on('reconnecting', () => console.log('جاري إعادة الاتصال...'));
-client.on('error', (err) => console.error('خطأ في الاتصال:', err));
 
 // بدء التشغيل
 startBot();
