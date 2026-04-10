@@ -15,7 +15,7 @@ async function startBot() {
         await client.login(
             EMAIL, 
             PASSWORD, 
-            undefined, 
+            '864e707e-f05e-4445-97e1-931698203fd0' , 
             OnlineState.ONLINE, 
             LoginType.SNAPCHAT
         );
