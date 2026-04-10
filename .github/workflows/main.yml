@@ -25,12 +25,17 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
+        # هنا نخبر النظام بالدخول للمجلد أولاً ثم التثبيت
         run: |
-          rm -rf node_modules package-lock.json
+          cd Another-acc
           npm install --no-audit --no-fund
-          
+
       - name: Run Bot
         env:
           U_MAIL: ${{ secrets.U_MAIL }}
           U_PASS: ${{ secrets.U_PASS }}
-        run: node Another-acc/index.js
+        # هنا نخبر النظام بالدخول للمجلد ثم تشغيل الملف
+        run: |
+          cd Another-acc
+          node index.js
+
