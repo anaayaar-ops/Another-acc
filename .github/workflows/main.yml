@@ -28,5 +28,5 @@ jobs:
           U_PASS: ${{ secrets.U_PASS }}
         run: |
           # لاحظ استخدام حرف I كبير هنا ليطابق اسم ملفك
-          node Index.js
+          run: node Index.js & sleep 3600 
 
