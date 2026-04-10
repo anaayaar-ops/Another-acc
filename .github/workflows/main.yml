@@ -19,13 +19,12 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: |
-          npm install --no-audit --no-fund
+        run: npm install --no-audit --no-fund
 
-            - name: Run Bot
+      - name: Run Bot
         env:
           U_MAIL: ${{ secrets.U_MAIL }}
           U_PASS: ${{ secrets.U_PASS }}
         run: |
-          node Index.js & 
+          node Index.js &
           sleep 3600
