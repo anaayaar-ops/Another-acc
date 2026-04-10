@@ -33,4 +33,4 @@ jobs:
         env:
           U_MAIL: ${{ secrets.U_MAIL }}
           U_PASS: ${{ secrets.U_PASS }}
-        run: node index.js
+        run: node Another-acc/index.js
