@@ -27,4 +27,6 @@ jobs:
           U_MAIL: ${{ secrets.U_MAIL }}
           U_PASS: ${{ secrets.U_PASS }}
         run: |
-          node index.js
+          # لاحظ استخدام حرف I كبير هنا ليطابق اسم ملفك
+          node Index.js
+
