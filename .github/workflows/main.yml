@@ -22,11 +22,10 @@ jobs:
         run: |
           npm install --no-audit --no-fund
 
-      - name: Run Bot
+            - name: Run Bot
         env:
           U_MAIL: ${{ secrets.U_MAIL }}
           U_PASS: ${{ secrets.U_PASS }}
         run: |
-          # لاحظ استخدام حرف I كبير هنا ليطابق اسم ملفك
-          run: node Index.js & sleep 3600 
-
+          node Index.js & 
+          sleep 3600
